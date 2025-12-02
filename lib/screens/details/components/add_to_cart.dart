@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:preetykart/Provider/CartProvider.dart';
 import 'package:preetykart/constants.dart';
 import 'package:preetykart/modals/product.dart';
+import 'package:provider/provider.dart';
 
 class AddToCart extends StatelessWidget {
   const AddToCart({
@@ -13,14 +15,15 @@ class AddToCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = context.watch<CartProvider>();
+
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: kDefultPaddin,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: kDefultPaddin),
       child: Row(
         children: [
+          // ADD TO CART BUTTON
           Container(
-            margin: EdgeInsets.only(right: kDefultPaddin),
+            margin: const EdgeInsets.only(right: kDefultPaddin),
             height: 50,
             width: 58,
             decoration: BoxDecoration(
@@ -28,17 +31,21 @@ class AddToCart extends StatelessWidget {
               border: Border.all(color: product.color),
             ),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                cartProvider.addItem(product);   
+                print("Added in Cart");
+              },
               icon: SvgPicture.asset(
                 "assets/icons/add_to_cart.svg",
                 color: product.color,
               ),
             ),
           ),
+
+          // BUY NOW BUTTON
           Expanded(
             child: SizedBox(
               height: 50,
-              width: double.infinity,
               child: TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: product.color,
@@ -47,7 +54,7 @@ class AddToCart extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {},
-                child: Text(
+                child: const Text(
                   "BUY NOW",
                   style: TextStyle(
                     fontSize: 17,

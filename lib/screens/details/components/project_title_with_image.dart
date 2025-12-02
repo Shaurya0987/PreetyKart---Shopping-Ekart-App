@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:preetykart/Provider/ThemeProvider.dart';
 import 'package:preetykart/constants.dart';
 import 'package:preetykart/modals/product.dart';
+import 'package:provider/provider.dart';
 
 class ProductTitleWithImage extends StatelessWidget {
   const ProductTitleWithImage({super.key, required this.product});
@@ -14,7 +16,16 @@ class ProductTitleWithImage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Aristocratic Hand Bag", style: TextStyle(color: Colors.white)),
+          SizedBox(height: 20),
+          Text(
+            "Aristocratic Hand Bag",
+            style: TextStyle(
+              color: context.watch<Themeprovider>().isDark
+                  ? Colors.white
+                  : Colors.black,
+              fontSize: 22,
+            ),
+          ),
           Text(
             product.title,
             style: Theme.of(context).textTheme.headlineLarge?.copyWith(
@@ -28,14 +39,23 @@ class ProductTitleWithImage extends StatelessWidget {
               RichText(
                 text: TextSpan(
                   children: [
-                    TextSpan(text: "Price\n"),
+                    TextSpan(
+                      text: "Price\n",
+                      style: TextStyle(
+                        color: context.watch<Themeprovider>().isDark
+                            ? Colors.white
+                            : Colors.black,
+                        fontSize: 21,
+                      ),
+                    ),
                     TextSpan(
                       text: "\$${product.price}",
-                      style: Theme.of(context).textTheme.headlineLarge
-                          ?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      style: TextStyle(
+                        color: context.watch<Themeprovider>().isDark
+                            ? Colors.white
+                            : Colors.black,
+                        fontSize: 37,
+                      ),
                     ),
                   ],
                 ),
